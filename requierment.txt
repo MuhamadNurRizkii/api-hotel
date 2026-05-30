@@ -1,0 +1,9 @@
+TECH API HOTEL
+
+1. express
+2. Mysql
+
+dev:
+nodemon
+morgan
+ts-node
