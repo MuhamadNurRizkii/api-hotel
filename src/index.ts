@@ -3,6 +3,7 @@ import Express, { Request, Response } from "express";
 import createError from "http-errors";
 import morgan from "morgan";
 import { conn } from "./db/database";
+import { kamar } from "./routes/kamar.route";
 
 const app = Express();
 const port = process.env.PORT_SERVER;
@@ -10,11 +11,8 @@ const port = process.env.PORT_SERVER;
 app.use(Express.json());
 app.use(morgan("dev"));
 
-app.get("/", async (req: Request, res: Response) => {
-  const [data] = await conn.query("SELECT * FROM Tamu");
-
-  res.json(data);
-});
+// routing
+app.use("/api", kamar);
 
 // handle error
 app.use((req: Request, res: Response, next: Function) => {
