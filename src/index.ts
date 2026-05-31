@@ -4,6 +4,8 @@ import createError from "http-errors";
 import morgan from "morgan";
 import { conn } from "./db/database";
 import { kamar } from "./routes/kamar.route";
+import { reservasi } from "./routes/reservasi.route";
+import { tamu } from "./routes/tamu.route";
 
 const app = Express();
 const port = process.env.PORT_SERVER;
@@ -13,6 +15,8 @@ app.use(morgan("dev"));
 
 // routing
 app.use("/api", kamar);
+app.use("/api", reservasi);
+app.use("/api", tamu);
 
 // handle error
 app.use((req: Request, res: Response, next: Function) => {
