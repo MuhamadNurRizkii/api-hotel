@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { findAllUsers, findUserById } from "../services/tamu.service";
+import {
+  findAllUsers,
+  findUserById,
+  insertTamu,
+} from "../services/tamu.service";
 import { Params } from "../utils/interfaces";
 import { Tamu } from "../types/tamu.type";
 
@@ -52,5 +56,32 @@ export const getUserById = async (req: Request<Params>, res: Response) => {
     return res
       .status(500)
       .json({ status: 500, message: `Terjadi kesalahan server` });
+  }
+};
+
+export const createUser = async (req: Request<Tamu>, res: Response) => {
+  const { IDTamu, NamaTamu, NoHP, Email } = req.body;
+
+  if (!IDTamu || !NamaTamu || !NoHP || !Email) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Semua field wajib diisi!" });
+  }
+  try {
+    const data = await insertTamu({ IDTamu, NamaTamu, NoHP, Email });
+
+    if (data.affectedRows === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Data gagal ditambahkan!" });
+    }
+
+    res
+      .status(201)
+      .json({ status: "success", message: "Data berhasil ditambahkan" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: "error", message: "Terjadi kesalahan server" });
   }
 };

@@ -1,5 +1,5 @@
 export type Tamu = {
-  IDtamu: number;
+  IDTamu: number;
   NamaTamu: string;
   NoHp: string;
   Email: string;
