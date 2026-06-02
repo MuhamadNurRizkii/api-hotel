@@ -1,9 +1,10 @@
-import Express, { Request, Response } from "express";
-import { conn } from "../db/database";
+import Express from "express";
+import { getUserById, getUsers } from "../controllers/tamu.controller";
 
 const tamu = Express.Router();
 
 // getdatatamu
-tamu.get("/tamu", async (req: Request, res: Response) => {});
+tamu.get("/tamu", getUsers);
+tamu.get("/tamu/:id", getUserById);
 
 export { tamu };
