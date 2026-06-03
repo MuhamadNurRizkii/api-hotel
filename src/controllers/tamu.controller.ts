@@ -3,6 +3,7 @@ import {
   findAllUsers,
   findUserById,
   insertTamu,
+  updateTamuById,
 } from "../services/tamu.service";
 import { Params } from "../utils/interfaces";
 import { Tamu } from "../types/tamu.type";
@@ -79,6 +80,41 @@ export const createUser = async (req: Request<Tamu>, res: Response) => {
     res
       .status(201)
       .json({ status: "success", message: "Data berhasil ditambahkan" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: "error", message: "Terjadi kesalahan server" });
+  }
+};
+
+export const editUserById = async (req: Request<Params>, res: Response) => {
+  const { id } = req.params;
+  const { NamaTamu, NoHP, Email } = req.body;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Id tidak ditemukan" });
+  }
+
+  if (!NamaTamu || !NoHP || !Email) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Semua field wajib diisi!" });
+  }
+
+  try {
+    const data = await updateTamuById({ NamaTamu, NoHP, Email }, id);
+
+    if (data.affectedRows === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Data gagal diupdate!" });
+    }
+
+    res
+      .status(201)
+      .json({ status: "success", message: "Data berhasil diupdate" });
   } catch (error) {
     return res
       .status(500)

@@ -11,6 +11,12 @@ export interface RequestBodyTamu {
   Email: string;
 }
 
+export interface UpdateTamu {
+  NamaTamu: string;
+  NoHP: string;
+  Email: string;
+}
+
 export interface Tamu extends RowDataPacket {
   IDTamu: number;
   NamaTamu: string;
