@@ -39,3 +39,10 @@ export const updateTamuById = async (datas: UpdateTamu, id: string) => {
 
   return data;
 };
+
+export const deleteTamu = async (id: string) => {
+  const query: string = "DELETE FROM Tamu WHERE IDTamu = ?";
+  const [data] = await conn.query<ResultSetHeader>(query, [id]);
+
+  return data;
+};

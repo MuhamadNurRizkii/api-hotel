@@ -1,6 +1,7 @@
 import Express from "express";
 import {
   createUser,
+  deleteUserById,
   editUserById,
   getUserById,
   getUsers,
@@ -13,5 +14,6 @@ tamu.get("/tamu", getUsers);
 tamu.get("/tamu/:id", getUserById);
 tamu.post("/tamu/add", createUser);
 tamu.put("/tamu/edit/:id", editUserById);
+tamu.delete("/tamu/delete/:id", deleteUserById);
 
 export { tamu };

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  deleteTamu,
   findAllUsers,
   findUserById,
   insertTamu,
@@ -115,6 +116,34 @@ export const editUserById = async (req: Request<Params>, res: Response) => {
     res
       .status(201)
       .json({ status: "success", message: "Data berhasil diupdate" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: "error", message: "Terjadi kesalahan server" });
+  }
+};
+
+export const deleteUserById = async (req: Request<Params>, res: Response) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Id tidak ditemukan" });
+  }
+
+  try {
+    const data = await deleteTamu(id);
+
+    if (data.affectedRows === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Data gagal dihapus" });
+    }
+
+    return res
+      .status(201)
+      .json({ status: "success", message: "Data berhasil dihapus" });
   } catch (error) {
     return res
       .status(500)
