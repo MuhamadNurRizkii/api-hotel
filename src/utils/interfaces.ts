@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2";
 export interface Params {
   id?: string;
   NoKamar?: number;
+  TipeKamar?: string;
 }
 
 export interface RequestBodyTamu {

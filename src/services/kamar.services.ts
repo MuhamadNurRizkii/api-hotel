@@ -22,8 +22,15 @@ export const insertKamar = async (datas: RequestBodyKamar) => {
 };
 
 export const findKamarByNoKamar = async (NoKamar: number) => {
-  const query = "SELECT * FROM Kamar WHERE NoKamar = ?";
+  const query: string = "SELECT * FROM Kamar WHERE NoKamar = ?";
   const [data] = await conn.query<RowDataPacket[]>(query, [NoKamar]);
+
+  return data;
+};
+
+export const findKamarByTipeKamar = async (TipeKamar: string) => {
+  const query: string = "SELECT * FROM Kamar WHERE TipeKamar = ?";
+  const [data] = await conn.query<RowDataPacket[]>(query, [TipeKamar]);
 
   return data;
 };

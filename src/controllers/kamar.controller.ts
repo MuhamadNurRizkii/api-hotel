@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   findAllKamar,
   findKamarByNoKamar,
+  findKamarByTipeKamar,
   insertKamar,
 } from "../services/kamar.services";
 import { Params, RequestBodyKamar } from "../utils/interfaces";
@@ -74,6 +75,41 @@ export const getKamarByNokamar = async (
 
   try {
     const [data] = await findKamarByNoKamar(NoKamar);
+
+    if (!data || (data as any[]).length === 0) {
+      return res.status(200).json({
+        status: "success",
+        message: "Kamar tidak ditemukan",
+        data: {},
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Data berhasil diambil",
+      data: data,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: "error", message: "Terjadi kesalahan error" });
+  }
+};
+
+export const getKamarByTipeKamar = async (
+  req: Request<Params>,
+  res: Response,
+) => {
+  const { TipeKamar } = req.params;
+
+  if (!TipeKamar) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Kamar tidak ditemukan!" });
+  }
+
+  try {
+    const [data] = await findKamarByTipeKamar(TipeKamar);
 
     if (!data || (data as any[]).length === 0) {
       return res.status(200).json({
