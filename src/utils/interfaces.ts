@@ -11,6 +11,13 @@ export interface RequestBodyTamu {
   Email: string;
 }
 
+export interface RequestBodyKamar {
+  NoKamar: number;
+  TipeKamar: string;
+  HargaPerMalam: number;
+  Status: string;
+}
+
 export interface UpdateTamu {
   NamaTamu: string;
   NoHP: string;

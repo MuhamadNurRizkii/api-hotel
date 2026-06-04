@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { findAllKamar } from "../services/kamar.services";
+import { findAllKamar, insertKamar } from "../services/kamar.services";
+import { RequestBodyKamar } from "../utils/interfaces";
 
 export const getAllKamar = async (req: Request, res: Response) => {
   try {
@@ -18,5 +19,39 @@ export const getAllKamar = async (req: Request, res: Response) => {
     return res
       .status(500)
       .json({ status: "error", message: "Terjadi kesalahan server" });
+  }
+};
+
+export const createKamar = async (
+  req: Request<RequestBodyKamar>,
+  res: Response,
+) => {
+  const { NoKamar, TipeKamar, HargaPerMalam, Status } = req.body;
+
+  if (!NoKamar || !TipeKamar || !HargaPerMalam || !Status) {
+    return res
+      .status(400)
+      .json({ status: "errror", message: "Semua field wajib diisi" });
+  }
+
+  try {
+    const data = await insertKamar({
+      NoKamar,
+      TipeKamar,
+      HargaPerMalam,
+      Status,
+    });
+
+    if (data.affectedRows === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Gagal menambahkan data baru" });
+    }
+
+    return res
+      .status(201)
+      .json({ status: "success", message: "Berhasil menambahkan data baru" });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error });
   }
 };
