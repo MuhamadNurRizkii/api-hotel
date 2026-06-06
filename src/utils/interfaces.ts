@@ -26,6 +26,12 @@ export interface UpdateTamu {
   Email: string;
 }
 
+export interface UpdateKamar {
+  TipeKamar: string;
+  HargaPerMalam: number;
+  Status: string;
+}
+
 export interface Tamu extends RowDataPacket {
   IDTamu: number;
   NamaTamu: string;
